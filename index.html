@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiwi 💚</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#fdf6f0;
+color:#333;
+text-align:center;
+overflow-x:hidden;
+}
+
+section{
+padding:60px 20px;
+}
+
+.hero{
+height:100vh;
+background:linear-gradient(135deg,#a8d5ba,#f8c8dc);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+animation:fadeIn 2s ease;
+}
+
+.hero h1{
+font-family:'Playfair Display',serif;
+font-size:2.5rem;
+margin-bottom:10px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+background:white;
+cursor:pointer;
+margin-top:20px;
+transition:.3s;
+font-weight:600;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.hidden{display:none;}
+
+input{
+padding:10px;
+border-radius:20px;
+border:1px solid #ccc;
+text-align:center;
+margin:10px 0;
+}
+
+.timeline img{
+width:90%;
+max-width:350px;
+border-radius:20px;
+margin:20px 0;
+box-shadow:0 10px 20px rgba(0,0,0,.1);
+transition:.4s;
+}
+
+.timeline img:hover{
+transform:scale(1.05);
+}
+
+.note{
+background:white;
+padding:15px;
+border-radius:20px;
+margin:15px auto;
+max-width:320px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.final{
+background:#222;
+color:white;
+position:relative;
+}
+
+#noBtn{
+position:relative;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@media(min-width:768px){
+.hero h1{font-size:3rem;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+<h1>To My Kiwi 💚</h1>
+<p>Since 24 January 2018</p>
+<button onclick="showPassword()">Unlock Our Story</button>
+<button onclick="playMusic()">Play Our Song 🎵</button>
+</section>
+
+<!-- PASSWORD -->
+<section id="passwordSection" class="hidden">
+<h2>🔒 Private Access</h2>
+<p>Only Kiwi Can Enter</p>
+<input type="password" id="passwordInput" placeholder="Enter password">
+<br>
+<small>Hint: What name do I call you in my phone? 😌</small>
+<br>
+<button onclick="checkPassword()">Enter</button>
+<p id="error"></p>
+</section>
+
+<!-- MAIN CONTENT -->
+<section id="content" class="hidden">
+
+<h2>We Have Been Together For 💚</h2>
+<p id="counter"></p>
+
+<div class="timeline">
+<img src="IMAGE1.jpg"> <!-- EDIT -->
+<p>24 Jan 2018 – The day my forever started.</p>
+
+<img src="IMAGE2.jpg"> <!-- EDIT -->
+<p>Bas HMM HMM kro… but don’t stop talking.</p>
+
+<img src="IMAGE3.jpeg"> <!-- EDIT -->
+<p>Chlo tum busy ho… still always mine.</p>
+</div>
+
+<h2>Open When 💌</h2>
+
+<div class="note" onclick="toggle(this)">
+Open when you're angry
+<p class="hidden">Amaaa yaaaar… even in fights, I choose you. Always.</p>
+</div>
+
+<div class="note" onclick="toggle(this)">
+Open when you miss me
+<p class="hidden">That “Bas HMM HMM kro” tone? I know it means you miss me.</p>
+</div>
+
+<div class="note" onclick="toggle(this)">
+Open when you overthink
+<p class="hidden">Since 2018, I’ve never once thought of leaving. I’m here.</p>
+</div>
+
+</section>
+
+<!-- FINAL -->
+<section class="final hidden" id="finalSection">
+<h2>Kiwi 💚</h2>
+<p>8 years ago I found a girl.<br>Today I see my future.</p>
+
+<button onclick="yesClick()">YES 💚</button>
+<button id="noBtn" onmouseover="moveNo()">Bas HMM HMM kro 😏</button>
+</section>
+
+<audio id="bgMusic">
+<!-- EDIT: Replace with your mp3 file -->
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+
+function showPassword(){
+document.querySelector('.hero').classList.add('hidden');
+document.getElementById('passwordSection').classList.remove('hidden');
+}
+
+let attempts=0;
+
+function checkPassword(){
+let input=document.getElementById('passwordInput').value;
+let error=document.getElementById('error');
+
+if(input==="Kiwi"){ // EDIT if nickname different
+document.getElementById('passwordSection').classList.add('hidden');
+document.getElementById('content').classList.remove('hidden');
+document.getElementById('finalSection').classList.remove('hidden');
+startCounter();
+}
+else{
+attempts++;
+if(attempts==1){error.innerText="Bas HMM HMM kro… think properly 😏";}
+else if(attempts==2){error.innerText="Chlo tum busy ho… try again.";}
+else{error.innerText="Amaaa yaaaar… it’s obvious!";}
+}
+}
+
+function toggle(el){
+let p=el.querySelector("p");
+p.classList.toggle("hidden");
+}
+
+function startCounter(){
+const startDate=new Date("2018-01-24T00:00:00");
+setInterval(()=>{
+const now=new Date();
+const diff=now-startDate;
+const days=Math.floor(diff/(1000*60*60*24));
+const hours=Math.floor((diff/(1000*60*60))%24);
+const minutes=Math.floor((diff/(1000*60))%60);
+document.getElementById("counter").innerText=
+days+" days "+hours+" hours "+minutes+" minutes";
+},1000);
+}
+
+function yesClick(){
+confetti({
+particleCount:250,
+spread:120,
+origin:{y:0.6}
+});
+
+setTimeout(function(){
+document.getElementById("loveMessage").style.display="flex";
+document.getElementById("bgMusic").volume = 0.5;
+},600);
+}
+
+function moveNo(){
+let btn=document.getElementById("noBtn");
+btn.style.position="absolute";
+btn.style.top=Math.random()*300+"px";
+btn.style.left=Math.random()*300+"px";
+}
+
+function playMusic(){
+document.getElementById("bgMusic").play();
+}
+
+</script>
+<!-- LOVE MESSAGE OVERLAY -->
+<div id="loveMessage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#111;
+color:white;
+z-index:9999;
+justify-content:center;
+align-items:center;
+padding:40px;
+text-align:center;
+overflow-y:auto;
+">
+
+<div style="max-width:700px; line-height:1.8; font-family:'Playfair Display',serif; animation:fadeIn 2s ease;">
+<h2 style="margin-bottom:20px;">Praggss 💚</h2>
+
+<p>
+From school to college, through a worldwide pandemic,<br>
+from first jobs to getting a car — you were always there,<br>
+watching me become who I am.
+</p>
+
+<br>
+
+<p>
+From having your birthday on my car number<br>
+to being my forever passenger princess,<br>
+decorating it with your touch.
+</p>
+
+<br>
+
+<p>Every milestone feels incomplete without you beside me.</p>
+
+<p>You live inside me more than I live within myself.</p>
+
+<br>
+
+<p>
+Through fights, breakups, and everything in between —<br>
+with nothing but love for my love.
+</p>
+
+<br>
+
+<p>
+With quiet love, deep respect, and gratitude in my heart,<br>
+happy 8 years of togetherness. ❤️
+</p>
+
+<br>
+
+<p>
+Still choosing you.<br>
+Here’s to everything we’re yet to build together.
+</p>
+
+<br>
+
+<h3>Always you. Always us.<br>Happy Valentine's Day 💚</h3>
+
+</div>
+</div>
+
+</body>
+</html>
